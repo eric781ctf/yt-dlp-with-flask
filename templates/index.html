@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube 批次下載</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: url('https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=1400&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 90%;
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"],
+        select {
+            margin: 15px 0;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .btn {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .status-box {
+            margin-top: 30px;
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .error {
+            color: #ff7070;
+            margin-top: 10px;
+        }
+
+        a.download-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: white;
+            background-color: #2196f3;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        a.download-link:hover {
+            background-color: #1e88e5;
+        }
+
+        small {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>YouTube 批次下載</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt" required><br>
+        <small>請上傳包含多個 YouTube 連結的 .txt 檔案（每行一個）</small><br><br>
+
+        <label for="quality">選擇格式：</label>
+        <select name="quality" id="quality" required>
+            <option value="720p">720p (mp4)</option>
+            <option value="480p">480p (mp4)</option>
+            <option value="360p">360p (mp4)</option>
+            <option value="mp3">音訊 (mp3)</option>
+        </select><br>
+
+        <button type="submit" class="btn">開始下載</button>
+        
+    </form>
+
+    <div id="loading" style="display:none; margin-top: 20px;">
+        <svg width="48" height="48" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#4caf50" stroke-dasharray="50.265 50.265"
+                    fill="none" stroke-linecap="round">
+                <animateTransform attributeName="transform" type="rotate"
+                                  repeatCount="indefinite" dur="1s"
+                                  values="0 50 50;360 50 50" keyTimes="0;1"/>
+            </circle>
+        </svg>
+        <p>影片正在下載中，請稍候...</p>
+    </div>
+
+    {% if status %}
+        <div class="status-box">
+            <h3>下載狀態：</h3>
+            <ul>
+                {% for s in status %}
+                    <li>{{ s }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if zip_ready %}
+        <a href="/download" class="download-link">點我下載壓縮檔</a>
+    {% endif %}
+</div>
+
+<script>
+    const form = document.querySelector("form");
+    const loading = document.getElementById("loading");
+
+    form.addEventListener("submit", function () {
+        loading.style.display = "block";
+    });
+</script>
+
+</body>
+</html>
