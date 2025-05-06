@@ -29,6 +29,15 @@ python app.py
 
 目前設定的使用方式是使用者自己開一個 `.txt` 檔案，並以每行一個連結的方式貼上要下載的影片連結，接著將其上傳至頁面即可～
 
+![Homepage](img/home.png)
+
+在下載過程中增加了轉圈圈的動畫，讓使用者知道正在下載
+![loading](img/loading.png)
+
+最後會各自顯示每部影片的下載狀態
+![result](img/result.png)
+
+
 # 提醒
 因為是自己用的小專案，就沒有用 Ajax 去提升 UX~
 
